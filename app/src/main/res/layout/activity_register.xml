@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -81,7 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_16dp"
-        android:hint="@string/hint_password">
+        android:hint="@string/hint_password"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ietPassword"
@@ -89,7 +91,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/quicksand_medium"
             android:imeOptions="actionNext"
-            android:inputType="text" />
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,15 +101,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_16dp"
-        android:hint="@string/hint_confirm_password">
+        android:hint="@string/hint_confirm_password"
+        app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ietConfirm_Password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/quicksand_medium"
-            android:imeOptions="actionNext"
-            android:inputType="text" />
+            android:imeOptions="actionDone"
+            android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +136,7 @@
         android:letterSpacing="0.1"
         android:text="@string/btn_register"
         android:textColor="@color/white"
-        android:textSize="@dimen/dimen_20sp"/>
+        android:textSize="@dimen/dimen_20sp" />
 
     <TextView
         android:id="@+id/tvLogin"
@@ -144,6 +147,6 @@
         android:fontFamily="@font/quicksand_medium"
         android:text="@string/text_already_have_an_account"
         android:textColor="@color/gray"
-        android:textSize="@dimen/dimen_16sp"/>
+        android:textSize="@dimen/dimen_16sp" />
 
 </LinearLayout>

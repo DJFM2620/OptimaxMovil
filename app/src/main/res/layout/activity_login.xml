@@ -29,7 +29,7 @@
         android:hint="@string/hint_email">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tieEmail"
+            android:id="@+id/ietEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/quicksand_medium"
@@ -49,12 +49,12 @@
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tiePassword"
+            android:id="@+id/ietPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/quicksand_medium"
             android:imeOptions="actionDone"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
