@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "998897153181",
+    "project_id": "optimaxmovil",
+    "storage_bucket": "optimaxmovil.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998897153181:android:2598929eddc12427b39074",
+        "android_client_info": {
+          "package_name": "pe.idat.optimax"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998897153181-tp93pn306v2bgcvptossnk9847g8srad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASQYowzu7i-rAUV609y56Wj1E-T4HtTSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998897153181-tp93pn306v2bgcvptossnk9847g8srad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

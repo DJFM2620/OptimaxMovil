@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OptimaxMovil</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="text_forgot_password">¿Olvistaste la contraseña?</string>
+    <string name="text_dont_have_an_account">No tienes cuenta? <font color="#000000"><b>Registrate</b></font></string>
+    <string name="text_login">LOGIN</string>
+</resources>
