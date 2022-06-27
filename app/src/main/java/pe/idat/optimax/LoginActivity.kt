@@ -23,22 +23,14 @@ class LoginActivity : AppCompatActivity() {
 
         navigateToRegister()
         validateInputs()
-
-        mBinding.ietEmail.setOnFocusChangeListener { view, b ->  mBinding.tilEmail.error = null}
-        with(mBinding.ietPassword){
-            setOnFocusChangeListener {
-                    view, b ->  mBinding.tilPassword.error = null
-                    mBinding.tilPassword.isPasswordVisibilityToggleEnabled = true
-            }
-        }
     }
 
     private fun validateInputs(){
 
+        auth = Firebase.auth
+
         mBinding.btnLogin.setOnClickListener {
 
-            mBinding.tilEmail.clearFocus()
-            mBinding.tilPassword.clearFocus()
 
             val email = mBinding.ietEmail.text.toString().trim()
             val pass = mBinding.ietPassword.text.toString().trim()
@@ -46,11 +38,11 @@ class LoginActivity : AppCompatActivity() {
             mBinding.tilEmail.clearFocus()
             mBinding.tilPassword.clearFocus()
 
-            if (email.isEmpty()){ mBinding.ietEmail.error = "Requerido" }
+            if (email.isEmpty()){
+                mBinding.ietEmail.error = "Requerido"
+            }
             else if (pass.isEmpty()){
-
                 mBinding.ietPassword.error = "Requerido"
-                mBinding.tilPassword.isPasswordVisibilityToggleEnabled = false
 
             }else {
                 loginUser(email, pass)
@@ -60,14 +52,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showHome(email: String, pass: String) {
 
-        mBinding.btnLogin.setOnClickListener {
-
-            val intent = Intent(this, MainActivity::class.java).apply {
-                }
-                intent.putExtra("Email", email)
-                intent.putExtra("Pass", pass)
-                startActivity(intent)
+        val intent = Intent(this, MainActivity::class.java).apply {
             }
+            intent.putExtra("Email", email)
+            intent.putExtra("Pass", pass)
+            startActivity(intent)
         }
 
     private fun navigateToRegister() {
