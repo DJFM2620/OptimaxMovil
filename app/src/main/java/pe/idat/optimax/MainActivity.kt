@@ -110,13 +110,22 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, Bottom
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.profileMenu -> {
+            R.id.citasMenu -> {
                 val fragment = CitasFragment()
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.nav_fragment, fragment, fragment.javaClass.simpleName)
                     .commit()
                 return true
             }
+            R.id.profileMenu -> {
+                val fragment = AccountFragment()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_fragment, fragment, fragment.javaClass.simpleName)
+                    .commit()
+                return true
+            }
+
+
         }
         return false
     }

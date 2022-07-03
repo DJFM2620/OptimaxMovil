@@ -13,4 +13,6 @@
     <string name="text_terms_and_conditions">Terminos y condiciones</string>
     <string name="btn_register">Registrar</string>
     <string name="Guardar">Guardar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
