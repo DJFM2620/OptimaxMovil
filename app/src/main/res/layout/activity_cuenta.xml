@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E2085DEF"
+        android:fontFamily="@font/quicksand_bold"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.1"
+        android:paddingVertical="@dimen/dimen_16sp"
+        android:text="@string/text_title_fragment_cuenta"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="@dimen/dimen_20sp"
+        android:layout_marginBottom="@dimen/dimen_20sp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/ic_cliente_cuenta"
+        />
+
+    <TextView
+        android:layout_width="366dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="@dimen/dimen_20sp"
+        android:layout_marginTop="@dimen/dimen_20sp"
+        android:layout_marginEnd="@dimen/dimen_20sp"
+        android:gravity="bottom|top"
+        android:text="Nombre:"
+        android:textSize="20sp"
+        android:typeface="normal"
+        tools:visibility="visible" />
+</LinearLayout>

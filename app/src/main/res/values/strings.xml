@@ -12,4 +12,5 @@
     <string name="hint_confirm_password">Confirmar Contraseña</string>
     <string name="text_terms_and_conditions">Terminos y condiciones</string>
     <string name="btn_register">Registrar</string>
+    <string name="text_title_fragment_cuenta">Cuenta</string>
 </resources>

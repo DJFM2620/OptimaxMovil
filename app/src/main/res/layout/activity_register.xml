@@ -36,7 +36,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/quicksand_medium"
             android:imeOptions="actionNext"
-            android:inputType="text" />
+            android:inputType="text"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
