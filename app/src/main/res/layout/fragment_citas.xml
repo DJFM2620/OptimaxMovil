@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/Citas_fragment"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".CitasFragment">
+
+    <LinearLayout
+        android:id="@+id/register_citaslayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <EditText
+            android:id="@+id/nombreEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/edit_text_bg"
+            android:drawableRight="@null"
+            android:fontFamily="@font/quicksand_medium"
+            android:layout_margin="20dp"
+            android:hint="Nombre"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/mainText"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ApellidoEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_bg"
+            android:layout_margin="20dp"
+            android:drawableRight="@null"
+            android:fontFamily="@font/quicksand_medium"
+            android:hint="Apellido"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/mainText"
+            android:textSize="15sp" />
+
+        <EditText
+
+            android:id="@+id/ANumeroEt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text_bg"
+            android:drawableRight="@null"
+            android:layout_margin="@dimen/dimen_20sp"
+            android:fontFamily="@font/quicksand_medium"
+            android:hint="Numero de Telefono"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textColor="@color/mainText"
+            android:textSize="15sp"
+
+            />
+
+
+
+        <DatePicker
+
+            android:layout_width="250dp"
+            android:layout_height="390dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+
+            />
+        <TimePicker
+            android:layout_gravity="center"
+            android:layout_width="250dp"
+            android:layout_height="370dp"
+            android:layout_marginTop="12dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="100dp"
+            android:background="#E2085DEF"
+            android:fontFamily="@font/quicksand_bold"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:letterSpacing="0.1"
+            android:text="@string/Guardar"
+            android:textColor="@color/white"
+
+            />
+
+
+    </LinearLayout>
+
+
+</ScrollView>

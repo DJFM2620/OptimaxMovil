@@ -3,9 +3,11 @@ package pe.idat.optimax
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +17,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.util.zip.Inflater
 
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener, BottomNavigationView.OnNavigationItemSelectedListener {
+
+
+    lateinit var bottomNavigationView: BottomNavigationView
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: ArticleAdapter
@@ -37,6 +42,15 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         mBinding.svArticle.setOnQueryTextListener(this)
         initRecyclerView()
+
+
+
+        bottomNavigationView= findViewById(R.id.bottomNavMenu)
+        bottomNavigationView.setOnNavigationItemSelectedListener(this)
+
+        supportFragmentManager.beginTransaction().replace(R.id.nav_fragment, CitasFragment() ).commit()
+
+
     }
 
     private fun getRetrofit():Retrofit{
@@ -92,4 +106,28 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     override fun onQueryTextChange(newText: String?): Boolean {
         return true
     }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.citasMenu -> {
+                val fragment = CitasFragment()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_fragment, fragment, fragment.javaClass.simpleName)
+                    .commit()
+                return true
+            }
+            R.id.profileMenu -> {
+                val fragment = AccountFragment()
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.nav_fragment, fragment, fragment.javaClass.simpleName)
+                    .commit()
+                return true
+            }
+
+
+        }
+        return false
+    }
+
 }
