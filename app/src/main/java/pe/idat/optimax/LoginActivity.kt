@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
         with(builder){
 
             builder.setTitle("ERROR")
-            builder.setMessage("Se ha producido un error autenticando al usuario")
+            builder.setMessage("Se ha producido un error autenticando al usuario.")
             builder.setPositiveButton("Aceptar", null)
         }
         val dialog: AlertDialog = builder.create()
