@@ -18,6 +18,6 @@ interface APIService {
     @GET
     suspend fun getDistrictById(@Url url: String):Response<DistrictResponse>
 
-    @POST
-    suspend fun postNewClient(@Url url: String, @Body clientDto: ClientDto): Call<ClientDto>
+    @POST("Agregar")
+    suspend fun postNewClient(@Body clientDto: ClientDto): Response<ClientDto>
 }

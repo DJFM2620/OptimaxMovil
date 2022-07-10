@@ -39,13 +39,14 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         initRecyclerView()
         findAll()
 
-        /*searchDistrictById("1")*/
+        searchDistrictById("1")
     }
 
     private fun getRetrofit():Retrofit{
 
         return Retrofit.Builder()
                        .baseUrl(baseURL)
+                       .addConverterFactory(NullOnEmptyConverterFactory())
                        .addConverterFactory(GsonConverterFactory.create())
                        /*.client(getClient())*/
                        .build()
@@ -72,13 +73,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                     mAdapter.notifyDataSetChanged()
                 }else{
                     showError()
-
                 }
             }
         }
     }
 
-    /*private fun searchDistrictById(Id: String) {
+    private fun searchDistrictById(Id: String) {
         mBinding.btnPost.setOnClickListener{
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -89,17 +89,14 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 runOnUiThread{
                     if(call.isSuccessful){
                         val districts = DistrictResponse(codDistrict = district?.codDistrict!!.toInt(), name = district?.name.toString())
-                        listDistricts.clear()
-                        listDistricts.add(districts)
-                        Log.i("MENSAJEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE3","DISTRITO ---> ${listDistricts[0]}")
-                        insertClient(listDistricts[0])
+                        insertClient(districts)
                     }else{
                         showError()
                     }
                 }
             }
         }
-    }*/
+    }
 
     private fun searchById(Id: String){
 
@@ -124,12 +121,12 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
     }
 
-    /*private fun insertClient(districtResponse: DistrictResponse){
+    private fun insertClient(districtResponse: DistrictResponse){
 
         val client = ClientDto(
                                 name = "MovilUser",
-                                middleName = "Movilmn",
-                                lastName = "Movilln",
+                                pSurname = "MovilPaternalSurname",
+                                mSurname = "MovillMaternalSurname",
                                 DNI = 12345678,
                                 phone = 112233445,
                                 email = "MovilUser@Hotmail.com",
@@ -139,24 +136,16 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         CoroutineScope(Dispatchers.IO).launch {
 
-            val call = getRetrofit().create(APIService::class.java).postNewClient(baseURL, client)
-            runOnUiThread {
-
-                call.enqueue(object: Callback<ClientDto>{
-
-                    override fun onResponse(call: Call<ClientDto>, response: Response<ClientDto>) {
-
-                        val addedClient = response.body()
-                        Toast.makeText(this@MainActivity, "El cliente ${client.name} ha sido creado exitosamente", Toast.LENGTH_SHORT).show()
-                        Log.e("BODY POST", addedClient.toString())
-                    }
-                    override fun onFailure(call: Call<ClientDto>, t: Throwable) {
-                        showError()
-                    }
-                })
+            val call = getRetrofit().create(APIService::class.java).postNewClient(client)
+            runOnUiThread{
+                if(call.isSuccessful){
+                    Toast.makeText(this@MainActivity, "El cliente ha sido agregado exitosamente", Toast.LENGTH_SHORT).show()
+                }else{
+                    showError()
+                }
             }
         }
-    }*/
+    }
 
     private fun initRecyclerView(){
         mAdapter = ArticleAdapter(listArticles)
@@ -183,7 +172,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 findAll()
             }
         }
-
         return true
     }
 }

@@ -1,12 +1,14 @@
 package pe.idat.optimax
 
+import com.google.gson.annotations.SerializedName
+
 data class ClientDto(
-                    var name: String,
-                    var middleName: String,
-                    var lastName: String,
-                    var DNI: Int,
-                    var phone: Int,
-                    var email: String,
-                    var ruc: String = "",
-                    var codDistrict: DistrictResponse
+                    @SerializedName("nombres")var name: String,
+                    @SerializedName("apellidop")var pSurname: String,
+                    @SerializedName("apellidom")var mSurname: String,
+                    @SerializedName("dni")var DNI: Int,
+                    @SerializedName("celular")var phone: Int,
+                    @SerializedName("email")var email: String,
+                    @SerializedName("ruc")var ruc: String = "",
+                    @SerializedName("distrito")var codDistrict: DistrictResponse
                     )
