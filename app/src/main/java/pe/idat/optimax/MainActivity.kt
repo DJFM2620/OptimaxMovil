@@ -2,8 +2,10 @@ package pe.idat.optimax
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,10 +15,13 @@ import pe.idat.optimax.model.ArticleResponse
 import pe.idat.optimax.model.ClientDto
 import pe.idat.optimax.model.DistrictResponse
 import pe.idat.optimax.databinding.ActivityMainBinding
+import pe.idat.optimax.fragments.CartFragment
+import pe.idat.optimax.fragments.HomeFragment
+import pe.idat.optimax.fragments.ProfileFragment
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var mBinding: ActivityMainBinding
     private lateinit var mAdapter: ArticleAdapter
@@ -32,51 +37,30 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mBinding.root)
 
-        mBinding.svArticle.setOnQueryTextListener(this)
-        initRecyclerView()
+        replaceFragment(HomeFragment())
+
+        mBinding.bottomNavigationView.setOnItemSelectedListener {
+
+            when (it.itemId) {
+
+                R.id.menu_home -> replaceFragment(HomeFragment())
+                R.id.menu_cart -> replaceFragment(CartFragment())
+                R.id.menu_profile -> replaceFragment(ProfileFragment())
+                else -> {
+                }
+            }
+            true
+        }
+
+        /*mBinding.svArticle.setOnQueryTextListener(this)*/
+        /*initRecyclerView()
         findAll()
 
         searchDistrictById("1")
-        insertOrder()
+        insertOrder()*/
     }
 
-    private fun getRetrofit():Retrofit{
-
-        return Retrofit.Builder()
-                       .baseUrl(baseURL)
-                       .addConverterFactory(NullOnEmptyConverterFactory())
-                       .addConverterFactory(GsonConverterFactory.create())
-                       /*.client(getClient())*/
-                       .build()
-    }
-
-    private fun getClient(): OkHttpClient {
-
-        val client = OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).build()
-
-        return client
-    }
-
-    private fun findAll(){
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val call = getRetrofit().create(APIService::class.java).getArticles(baseURL)
-            val listArticleResponse: List<ArticleResponse> = call.body() ?: emptyList()
-
-            runOnUiThread {
-                if (call.isSuccessful){
-                    listArticles.clear()
-                    listArticles.addAll(listArticleResponse)
-                    mAdapter.notifyDataSetChanged()
-                }else{
-                    showError()
-                }
-            }
-        }
-    }
-
-    private fun searchDistrictById(Id: String) {
+    /*private fun searchDistrictById(Id: String) {
         mBinding.btnPost.setOnClickListener{
 
             CoroutineScope(Dispatchers.IO).launch {
@@ -91,28 +75,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                     }else{
                         showError()
                     }
-                }
-            }
-        }
-    }
-
-    private fun searchById(Id: String){
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val call = getRetrofit().create(APIService::class.java).getArticlesById("$Id")
-            val article = call.body()
-
-            runOnUiThread{
-                if(call.isSuccessful){
-                    val articles = ArticleResponse(codArticle = article?.codArticle.toString(),
-                                                                       price = article?.price.toString(),
-                                                                       imagen = article?.imagen.toString())
-                    listArticles.clear()
-                    listArticles.addAll(listOf(articles))
-                    mAdapter.notifyDataSetChanged()
-                }else{
-                    showError()
                 }
             }
         }
@@ -168,33 +130,13 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                 }
             }
         }
-    }
+    }*/
 
-    private fun initRecyclerView(){
-        mAdapter = ArticleAdapter(listArticles)
-        mBinding.recyclerView.layoutManager = GridLayoutManager(this,1)
-        mBinding.recyclerView.adapter = mAdapter
-    }
+    private fun replaceFragment(fragment: Fragment) {
 
-    private fun showError(){
-        Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onQueryTextSubmit(query: String?): Boolean {
-
-        if(!query.isNullOrEmpty()){
-            searchById(query.toLowerCase())
-        }
-        return true
-    }
-
-    override fun onQueryTextChange(newText: String?): Boolean {
-
-        if(newText.isNullOrEmpty()){
-            if(!mBinding.svArticle.isIconified){
-                findAll()
-            }
-        }
-        return true
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.frame_layout, fragment)
+        fragmentTransaction.commit()
     }
 }
