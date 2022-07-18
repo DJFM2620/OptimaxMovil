@@ -1,20 +1,17 @@
 package pe.idat.optimax
 
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.common.api.Api
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.newCoroutineContext
 import okhttp3.OkHttpClient
+import pe.idat.optimax.model.ArticleResponse
+import pe.idat.optimax.model.ClientDto
+import pe.idat.optimax.model.DistrictResponse
 import pe.idat.optimax.databinding.ActivityMainBinding
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
@@ -26,7 +23,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private val listArticles = mutableListOf<ArticleResponse>()
     private val listDistricts = mutableListOf<DistrictResponse>()
 
-    private val baseURL: String = "http://192.168.1.15:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.4:8040/idat/Api/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,6 +37,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         findAll()
 
         searchDistrictById("1")
+        insertOrder()
     }
 
     private fun getRetrofit():Retrofit{
@@ -107,7 +105,6 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
             runOnUiThread{
                 if(call.isSuccessful){
-                    /*article?.imagen*/
                     val articles = ArticleResponse(codArticle = article?.codArticle.toString(),
                                                                        price = article?.price.toString(),
                                                                        imagen = article?.imagen.toString())
@@ -142,6 +139,32 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
                     Toast.makeText(this@MainActivity, "El cliente ha sido agregado exitosamente", Toast.LENGTH_SHORT).show()
                 }else{
                     showError()
+                }
+            }
+        }
+    }
+
+    private fun insertOrder(){
+
+        mBinding.btnPayment.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch{
+
+                val map=HashMap<String,String>()
+                map["cod_state"] = "1"
+                map["cod_client"] = "18"
+                map["date"] = "1996-05-21"
+                map["cod_article"] = "1"
+                map["quantity"] = "1"
+                map["subtotal"] = "200.0"
+
+                val call =getRetrofit().create(APIService::class.java).postnewVenta(map)
+                runOnUiThread {
+                    if (call.isSuccessful){
+                        Toast.makeText(this@MainActivity,"La orden ha sido registrado exitosamente",Toast.LENGTH_SHORT).show()
+
+                    }else{
+                        showError()
+                    }
                 }
             }
         }

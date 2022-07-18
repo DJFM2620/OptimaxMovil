@@ -1,4 +1,4 @@
-package pe.idat.optimax
+package pe.idat.optimax.model
 
 import com.google.gson.annotations.SerializedName
 

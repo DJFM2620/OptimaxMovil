@@ -1,6 +1,8 @@
 package pe.idat.optimax
 
-import retrofit2.Call
+import pe.idat.optimax.model.ArticleResponse
+import pe.idat.optimax.model.ClientDto
+import pe.idat.optimax.model.DistrictResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,4 +22,7 @@ interface APIService {
 
     @POST("Agregar")
     suspend fun postNewClient(@Body clientDto: ClientDto): Response<ClientDto>
+
+    @POST("InsertarVenta")
+    suspend fun postnewVenta(@Body hashMap: HashMap<String,String>):Response<*>
 }

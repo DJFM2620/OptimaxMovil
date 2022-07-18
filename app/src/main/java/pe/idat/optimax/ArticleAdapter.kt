@@ -3,6 +3,7 @@ package pe.idat.optimax
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import pe.idat.optimax.model.ArticleResponse
 
 class ArticleAdapter(private val articles:List<ArticleResponse>):RecyclerView.Adapter<ArticleViewHolder>() {
 
