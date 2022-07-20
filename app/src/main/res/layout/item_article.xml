@@ -14,26 +14,30 @@
 
         <Button
             android:id="@+id/addItemCart"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="add to cart"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="320dp"
+            android:background="@drawable/ic_cart"
+            android:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="@+id/ivImage"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"/>
+
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageView
             android:id="@+id/ivImage"
-            android:layout_width="match_parent"
-            android:layout_height="270dp"
-            android:scaleType="center"
+            android:layout_width="371dp"
+            android:layout_height="264dp"
             android:background="@color/gray"
             android:contentDescription="@string/app_name"
-            app:layout_constraintStart_toStartOf="parent"
+            android:scaleType="center"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvPrice"
@@ -41,8 +45,10 @@
             android:layout_height="50dp"
             android:layout_gravity="bottom"
             android:layout_marginTop="50dp"
-            android:textSize="50px"
+            android:textSize="85px"
             android:background="@color/black"
+            android:textStyle="italic"
+            android:gravity="center"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

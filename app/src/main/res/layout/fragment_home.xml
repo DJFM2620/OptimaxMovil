@@ -8,13 +8,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
-    <!--
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="FRAGMENTO DEL HOME" />-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -30,6 +23,8 @@
             app:layout_constraintVertical_bias="0"
             app:queryHint="Buscar articulo" />
 
+        <!-- app:layout_constraintEnd_toEndOf="parent"-->
+
         <Button
             android:id="@+id/btnCart"
             android:layout_width="150dp"
@@ -39,6 +34,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/svArticle" />
+
+
+        <!--app:layout_constraintStart_toStartOf="parent"-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

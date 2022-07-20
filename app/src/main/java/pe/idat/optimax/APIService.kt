@@ -25,4 +25,10 @@ interface APIService {
 
     @POST("InsertarVenta")
     suspend fun postnewVenta(@Body hashMap: HashMap<String,String>):Response<*>
+
+    @GET
+    suspend fun getClientByEmail(@Url url: String):Response<Int>
+
+    @POST("Recepcion")
+    suspend fun postRecepcion(@Body hashMap: HashMap<String,String>):Response<*>
 }

@@ -8,6 +8,7 @@ import pe.idat.optimax.databinding.ActivityMainBinding
 import pe.idat.optimax.fragments.CartFragment
 import pe.idat.optimax.fragments.HomeFragment
 import pe.idat.optimax.fragments.ProfileFragment
+import pe.idat.optimax.model.ArticleCartDto
 
 class MainActivity : AppCompatActivity(), Communicator{
 
@@ -44,7 +45,7 @@ class MainActivity : AppCompatActivity(), Communicator{
         fragmentTransaction.commit()
     }
 
-    override fun passData(articleList: MutableList<ArticleResponse>) {
+    override fun passData(articleList: MutableList<ArticleCartDto>) {
 
         val bundle = Bundle()
         bundle.putSerializable("data", articleList.toTypedArray())

@@ -26,6 +26,9 @@
         <TextView
             android:id="@+id/tvCod"
             android:layout_width="90dp"
+            android:textSize="85px"
+            android:gravity="center"
+            android:textStyle="italic"
             android:layout_height="30dp"
             android:background="@color/black"
             android:textColor="@color/white"
@@ -37,13 +40,19 @@
             android:layout_width="79dp"
             android:layout_height="30dp"
             android:background="@color/gray"
+            android:textSize="85px"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="italic"
             app:layout_constraintStart_toEndOf="@id/tvCod"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnRemoveQuantity"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
             android:layout_width="25dp"
             android:layout_height="37dp"
+            app:backgroundTint="#1E1E1E"
             app:icon="@drawable/ic_remove"
             app:iconGravity="top"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -51,18 +60,23 @@
 
         <TextView
             android:id="@+id/tvQuantity"
+            android:text="1"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="65px"
             android:layout_width="40dp"
             android:layout_height="30dp"
             android:layout_marginBottom="4dp"
-            android:background="@color/black"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/btnRemoveQuantity" />
 
         <com.google.android.material.button.MaterialButton
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle"
             android:id="@+id/btnAddQuantity"
             android:layout_width="25dp"
             android:layout_height="37dp"
-            android:layout_marginRight="5dp"
+            app:backgroundTint="#050505"
             app:icon="@drawable/ic_add"
             app:iconGravity="top"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -70,6 +84,10 @@
 
         <TextView
             android:id="@+id/tvTotal"
+            android:textSize="85px"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textStyle="italic"
             android:layout_width="79dp"
             android:layout_height="30dp"
             android:background="@color/gray"
