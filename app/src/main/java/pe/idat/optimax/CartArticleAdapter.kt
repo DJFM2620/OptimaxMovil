@@ -16,28 +16,20 @@ import pe.idat.optimax.databinding.ItemArticleBinding
 import pe.idat.optimax.databinding.ItemArticleCartBinding
 import pe.idat.optimax.model.ArticleResponse
 
-class ArticleAdapter(private val articles:List<ArticleResponse>,
-                     private var listener: OnClickListener):RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class CartArticleAdapter(private val articles:Array<ArticleResponse>):RecyclerView.Adapter<CartArticleAdapter.ViewHolder>() {
 
     private lateinit var mContext: Context
 
     inner class ViewHolder(view:View): RecyclerView.ViewHolder(view){
 
-        val binding = ItemArticleBinding.bind(view)
-
-        fun setListener(articleResponse: ArticleResponse){
-
-            binding.addItemCart.setOnClickListener {
-                listener.onClick(articleResponse)
-            }
-        }
+        val binding = ItemArticleCartBinding.bind(view)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         mContext = parent.context
 
-        val view = LayoutInflater.from(mContext).inflate(R.layout.item_article, parent, false)
+        val view = LayoutInflater.from(mContext).inflate(R.layout.item_article_cart, parent, false)
         return ViewHolder(view)
     }
 
@@ -45,14 +37,13 @@ class ArticleAdapter(private val articles:List<ArticleResponse>,
 
         val item = articles[position]
 
-        holder.setListener(item)
-
         Glide.with(mContext)
             .load(convertBase64ToBitmap(item.imagen))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .centerCrop()
             .into(holder.binding.ivImage)
 
+        holder.binding.tvCod.text = item.codArticle
         holder.binding.tvPrice.text = item.price
     }
 

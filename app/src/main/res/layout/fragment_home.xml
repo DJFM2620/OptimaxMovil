@@ -28,7 +28,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0"
-            app:queryHint="Buscar articulo"/>
+            app:queryHint="Buscar articulo" />
+
+        <Button
+            android:id="@+id/btnCart"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="CARRITO"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/svArticle" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -37,7 +47,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/svArticle"/>
+            app:layout_constraintTop_toBottomOf="@+id/btnCart"
+            tools:listitem="@layout/item_article" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

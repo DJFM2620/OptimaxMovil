@@ -1,16 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/cart_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.CartFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="FRAGMENTO DEL CARRITO" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_Cart"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            tools:listitem="@layout/item_article"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/gridlayout"/>
+
+        <GridLayout
+            android:id="@+id/gridlayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_Cart"
+            android:alignmentMode="alignBounds"
+            android:columnCount="2"
+            android:rowCount="4">
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="30dp"
+                android:textSize="18dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="start"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="@string/subTotal"/>
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="30dp"
+                android:textSize="18dp"
+                android:gravity="start"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text="@string/IGV"/>
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="30dp"
+                android:textSize="18dp"
+                android:gravity="start"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text="@string/delivery_service"/>
+
+            <TextView
+                android:layout_width="190dp"
+                android:layout_height="30dp"
+                android:textSize="25dp"
+                android:gravity="start"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:text="@string/total" />
+
+            <TextView
+                android:id="@+id/tvSubTotal"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:textSize="18dp"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"
+                android:gravity="end"
+                android:layout_column="1"
+                android:layout_row="0"
+                android:text="S/. 320" />
+
+            <TextView
+                android:id="@+id/tvIGV"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:textSize="18dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:layout_column="1"
+                android:layout_row="1"
+                android:text="S/. 57.6" />
+
+            <TextView
+                android:id="@+id/tvDeliveryService"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:textSize="18dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:text="S/. 5.0" />
+
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="130dp"
+                android:layout_height="30dp"
+                android:textSize="25dp"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:layout_column="1"
+                android:layout_row="3"
+                android:text="S/. 377.6" />
+        </GridLayout>
+        
+        <Button
+            android:id="@+id/btnRegisterOrder"
+            android:layout_width="230dp"
+            android:layout_height="70dp"
+            app:layout_constraintTop_toBottomOf="@+id/gridlayout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/btn_registerOrder"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

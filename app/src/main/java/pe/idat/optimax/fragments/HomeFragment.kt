@@ -10,7 +10,6 @@ import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import pe.idat.optimax.databinding.FragmentHomeBinding
 import pe.idat.optimax.model.ArticleResponse
-import pe.idat.optimax.model.DistrictResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import kotlinx.coroutines.CoroutineScope
@@ -19,11 +18,14 @@ import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import pe.idat.optimax.*
 
-class HomeFragment : Fragment() , SearchView.OnQueryTextListener{
+class HomeFragment : Fragment() , SearchView.OnQueryTextListener, OnClickListener{
 
-private lateinit var mBinding: FragmentHomeBinding
+    private lateinit var mBinding: FragmentHomeBinding
     private lateinit var mAdapter: ArticleAdapter
     private val listArticles = mutableListOf<ArticleResponse>()
+    private val listCart = mutableListOf<ArticleResponse>()
+
+    private lateinit var communicator: Communicator
 
     private val baseURL: String = "http://192.168.1.4:8040/idat/Api/"
 
@@ -34,6 +36,13 @@ private lateinit var mBinding: FragmentHomeBinding
         mBinding.svArticle.setOnQueryTextListener(this)
         initRecyclerView()
         findAll()
+
+        communicator = activity as Communicator
+
+        mBinding.btnCart.setOnClickListener{
+
+            communicator.passData(listCart)
+        }
 
         return mBinding.root
     }
@@ -75,7 +84,8 @@ private lateinit var mBinding: FragmentHomeBinding
     }
 
     private fun initRecyclerView(){
-        mAdapter = ArticleAdapter(listArticles)
+
+        mAdapter = ArticleAdapter(listArticles, this)
         mBinding.recyclerView.layoutManager = GridLayoutManager(activity,1)
         mBinding.recyclerView.adapter = mAdapter
     }
@@ -122,5 +132,10 @@ private lateinit var mBinding: FragmentHomeBinding
 
     private fun showError(){
         Toast.makeText(activity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onClick(articleResponse: ArticleResponse) {
+
+        listCart.add(articleResponse)
     }
 }

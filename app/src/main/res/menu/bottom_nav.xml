@@ -5,9 +5,9 @@
         android:id="@+id/menu_home"
         android:icon="@drawable/ic_home"/>
 
-    <item android:title="Cart"
+    <!--<item android:title="Cart"
         android:id="@+id/menu_cart"
-        android:icon="@drawable/ic_cart"/>
+        android:icon="@drawable/ic_cart"/>-->
 
     <item android:title="Perfil"
         android:id="@+id/menu_profile"

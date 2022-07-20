@@ -3,18 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/drawable/ic_add.xml" value="0.2435" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/drawable/ic_cart.xml" value="0.2435" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2425" />
+        <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/drawable/ic_remove.xml" value="0.2435" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/font/quicksand_bold.xml" value="0.3958333333333333" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/font/quicksand_medium.xml" value="0.3958333333333333" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/activity_register.xml" value="0.36666666666666664" />
-        <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/fragment_cart.xml" value="0.33" />
+        <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/fragment_cart.xml" value="0.25" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/fragment_item_list.xml" value="0.18333333333333332" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/item_article.xml" value="0.33" />
+        <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/layout/item_article_cart.xml" value="0.5" />
         <entry key="..\:/Joel-Instituto/6to_Ciclo/Desarrollo_Apps_Moviles/OptimaxMovil/app/src/main/res/menu/bottom_nav.xml" value="0.36666666666666664" />
       </map>
     </option>
