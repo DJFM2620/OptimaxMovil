@@ -27,8 +27,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun validateInputs(){
 
-        auth = Firebase.auth
-
         mBinding.btnLogin.setOnClickListener {
 
 

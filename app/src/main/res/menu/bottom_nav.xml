@@ -12,4 +12,8 @@
     <item android:title="Perfil"
         android:id="@+id/menu_profile"
         android:icon="@drawable/ic_person"/>
+
+    <item android:title="Mapa"
+        android:id="@+id/menu_appointment"
+        android:icon="@drawable/ic_calendar"/>
 </menu>

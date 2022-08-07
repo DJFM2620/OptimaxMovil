@@ -3,11 +3,8 @@ package pe.idat.optimax
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import pe.idat.optimax.model.ArticleResponse
 import pe.idat.optimax.databinding.ActivityMainBinding
-import pe.idat.optimax.fragments.CartFragment
-import pe.idat.optimax.fragments.HomeFragment
-import pe.idat.optimax.fragments.ProfileFragment
+import pe.idat.optimax.fragments.*
 import pe.idat.optimax.model.ArticleCartDto
 
 class MainActivity : AppCompatActivity(), Communicator{
@@ -30,6 +27,7 @@ class MainActivity : AppCompatActivity(), Communicator{
                 R.id.menu_home -> replaceFragment(HomeFragment())
                 /*R.id.menu_cart -> replaceFragment(CartFragment())*/
                 R.id.menu_profile -> replaceFragment(ProfileFragment())
+                R.id.menu_appointment -> replaceFragment(AppointmentFragment())
                 else -> {
                 }
             }

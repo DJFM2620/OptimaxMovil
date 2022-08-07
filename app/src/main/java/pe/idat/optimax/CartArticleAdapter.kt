@@ -41,8 +41,8 @@ class CartArticleAdapter(private val articles:Array<ArticleCartDto>):RecyclerVie
 
             binding.btnRemoveQuantity.setOnClickListener{
 
-                if(binding.tvQuantity.text.toString().toInt() == 0){
-                    binding.tvQuantity.text = "0"
+                if(binding.tvQuantity.text.toString().toInt() == 1){
+                    binding.tvQuantity.text = "1"
                 }
                 else if(binding.tvQuantity.text.toString().toInt() > 0){
 

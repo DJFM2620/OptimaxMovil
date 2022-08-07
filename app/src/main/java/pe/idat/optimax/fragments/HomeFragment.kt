@@ -32,7 +32,7 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener, OnClickListene
 
     private lateinit var communicator: Communicator
 
-    private val baseURL: String = "http://192.168.1.4:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
