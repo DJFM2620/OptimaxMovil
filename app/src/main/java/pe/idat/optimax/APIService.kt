@@ -1,5 +1,6 @@
 package pe.idat.optimax
 
+import org.json.JSONObject
 import pe.idat.optimax.model.ArticleResponse
 import pe.idat.optimax.model.ClientDto
 import pe.idat.optimax.model.DistrictResponse
@@ -34,4 +35,7 @@ interface APIService {
 
     @POST("Cita/Registrar")
     suspend fun postAppointment(@Body hashMap: HashMap<String,String>):Response<*>
+
+    @POST("tokens/")
+    suspend fun createToken(@Body jsonObject: JSONObject):Response<*>
 }

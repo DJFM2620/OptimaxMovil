@@ -43,13 +43,8 @@ class MainActivity : AppCompatActivity(), Communicator{
         fragmentTransaction.commit()
     }
 
-    override fun passData(articleList: MutableList<ArticleCartDto>) {
+    override fun startFragment(fragment: Fragment) {
 
-        val bundle = Bundle()
-        bundle.putSerializable("data", articleList.toTypedArray())
-
-        val fragment = CartFragment()
-        fragment.arguments = bundle
         replaceFragment(fragment)
     }
 }

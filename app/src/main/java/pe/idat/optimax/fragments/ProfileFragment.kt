@@ -26,6 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pe.idat.optimax.APIService
+import pe.idat.optimax.Communicator
 import pe.idat.optimax.NullOnEmptyConverterFactory
 import pe.idat.optimax.R
 import pe.idat.optimax.databinding.FragmentProfileBinding
@@ -42,6 +43,7 @@ class ProfileFragment : Fragment(), OnMapReadyCallback {
 
     private var currentMarker: Marker? = null
     private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
+    private lateinit var communicator: Communicator
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
@@ -53,6 +55,17 @@ class ProfileFragment : Fragment(), OnMapReadyCallback {
 
         getClientByEmail()
         updateClient()
+
+        communicator = activity as Communicator
+
+        /*mBinding.btnAddInfo.setOnClickListener {
+
+            communicator.startFragment(InfoFragment())
+        }
+        mBinding.btnInfo.setOnClickListener{
+
+            communicator.startFragment(AdditionalInfoFragment())
+        }*/
 
         val supportMapFragment =
             childFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment?

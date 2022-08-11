@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class HomeFragment : Fragment() , SearchView.OnQueryTextListener, OnClickListener{
+class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
 
     private lateinit var mBinding: FragmentHomeBinding
     private lateinit var mAdapter: ArticleAdapter
@@ -44,9 +44,9 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener, OnClickListene
 
         communicator = activity as Communicator
 
-        mBinding.btnCart.setOnClickListener{
-
-            communicator.passData(listCart)
+        mBinding.btnCart.setOnClickListener {
+            val fr = CartFragment()
+            communicator.startFragment(fr)
         }
 
         return mBinding.root
@@ -67,38 +67,6 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener, OnClickListene
         val client = OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).build()
 
         return client
-    }
-
-    private fun recepcion(){
-
-        CoroutineScope(Dispatchers.IO).launch{
-
-            var listQuantities = mutableListOf<Int>()
-            listQuantities.add(1)
-            listQuantities.add(10)
-            listQuantities.add(5)
-            listQuantities.add(4)
-
-            /*var listCodArticle = mutableListOf<Int>()
-
-            for (item in listArticles.indices) {
-
-                 listCodArticle.add(listArticles[item].codArticle.toInt())
-            }*/
-
-            val map=HashMap<String,String>()
-            map["cod_article"] = listQuantities.toString()
-
-            val call =getRetrofit().create(APIService::class.java).postRecepcion(map)
-            activity?.runOnUiThread {
-                if (call.isSuccessful){
-                    Toast.makeText(activity,"La data ha sido enviada exitosamente",Toast.LENGTH_SHORT).show()
-
-                }else{
-                    showError()
-                }
-            }
-        }
     }
 
     private fun findAll() {
@@ -122,7 +90,7 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener, OnClickListene
 
     private fun initRecyclerView(){
 
-        mAdapter = ArticleAdapter(listArticles, this)
+        mAdapter = ArticleAdapter(listArticles)
         mBinding.recyclerView.layoutManager = GridLayoutManager(activity,1)
         mBinding.recyclerView.adapter = mAdapter
     }
@@ -169,14 +137,5 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener, OnClickListene
 
     private fun showError(){
         Toast.makeText(activity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onClick(articleResponse: ArticleResponse) {
-
-        val articleCartDto = ArticleCartDto(codArticle = articleResponse.codArticle,
-                                            price = articleResponse.price,
-                                            imagen = articleResponse.imagen)
-
-        listCart.add(articleCartDto)
     }
 }

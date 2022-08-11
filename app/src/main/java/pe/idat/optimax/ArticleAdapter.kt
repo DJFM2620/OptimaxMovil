@@ -12,12 +12,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import org.jetbrains.anko.doAsync
 import pe.idat.optimax.databinding.ItemArticleBinding
 import pe.idat.optimax.databinding.ItemArticleCartBinding
+import pe.idat.optimax.model.ArticleEntity
 import pe.idat.optimax.model.ArticleResponse
 
-class ArticleAdapter(private val articles:List<ArticleResponse>,
-                     private var listener: OnClickListener):RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
+class ArticleAdapter(private val articles: MutableList<ArticleResponse>):RecyclerView.Adapter<ArticleAdapter.ViewHolder>() {
 
     private lateinit var mContext: Context
 
@@ -28,7 +29,17 @@ class ArticleAdapter(private val articles:List<ArticleResponse>,
         fun setListener(articleResponse: ArticleResponse){
 
             binding.addItemCart.setOnClickListener {
-                listener.onClick(articleResponse)
+
+                doAsync {
+                    val articleEntity = ArticleEntity(
+                        articleId = articleResponse.codArticle.toInt(),
+                        price = articleResponse.price,
+                        quantity = 1,
+                        image = articleResponse.imagen
+                    )
+
+                    OptimaxApplication.database.OptimaxDao().insertDB(articleEntity)
+                }
             }
         }
     }

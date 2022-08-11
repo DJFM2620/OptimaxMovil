@@ -2,6 +2,7 @@ package pe.idat.optimax.fragments
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,25 +14,24 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import pe.idat.optimax.*
 import pe.idat.optimax.databinding.FragmentCartBinding
 import pe.idat.optimax.model.ArticleCartDto
 import pe.idat.optimax.model.ArticleResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
-class CartFragment: Fragment(), OnClickListener{
+class CartFragment: Fragment(), OnClickListener {
 
     private lateinit var mBinding: FragmentCartBinding
     private lateinit var mAdapter: CartArticleAdapter
     private lateinit var listCartArticles: Array<ArticleCartDto>
-    /*private lateinit var listCodCli: Array<Int>*/
+
     private var email: String = ""
 
     private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
@@ -40,13 +40,9 @@ class CartFragment: Fragment(), OnClickListener{
 
         mBinding = FragmentCartBinding.inflate(inflater,container,false)
 
-        listCartArticles = arguments?.getSerializable("data") as Array<ArticleCartDto>
+        initRecyclerView()
 
-        if (listCartArticles != null) {
-            initRecyclerView()
-        }
-
-        var total = 0.0
+        /*var total = 0.0
 
         for (item in listCartArticles.indices) {
 
@@ -55,28 +51,63 @@ class CartFragment: Fragment(), OnClickListener{
 
         mBinding.tvSubTotal.text = total.roundToInt().toString()
         mBinding.tvIGV.text = ((total * 0.18).roundToInt()).toString()
-        mBinding.tvTotal.text = (((total + (total * 0.18)) + 5).roundToInt()).toString()
+        mBinding.tvTotal.text = (((total + (total * 0.18)) + 5).roundToInt()).toString()*/
 
         insertOrder()
-
-        /*mBinding.btnRegisterOrder.setOnClickListener {
-
-            searchClientByEmail("joel@hotmail.com")
-            Toast.makeText( activity,"${listCodCli.size}", Toast.LENGTH_SHORT).show()
-        }*/
 
         return mBinding.root
     }
 
     private fun initRecyclerView(){
 
-        mAdapter = CartArticleAdapter(listCartArticles)
+        mAdapter = CartArticleAdapter(mutableListOf(), this)
+
+        doAsync {
+            val articlesDB= OptimaxApplication.database.OptimaxDao().findAllDB()
+
+            uiThread {
+                mAdapter.setCollection(articlesDB)
+            }
+        }
         mBinding.recyclerViewCart.layoutManager = GridLayoutManager(activity,1)
         mBinding.recyclerViewCart.adapter = mAdapter
     }
 
-    override fun onClick(articleResponse: ArticleResponse) {
-        TODO("Not yet implemented")
+    override fun setTotal(total: Double) {
+
+        var subTotal = total
+        var igv = (total * 0.18)
+        var newTotal = (igv + total + 5.0)
+
+        mBinding.tvSubTotal.text = "S/${String.format("%.2f", subTotal)}"
+        mBinding.tvIGV.text = "S/${String.format("%.2f", igv)}"
+        mBinding.tvTotal.text = "S/${String.format("%.2f", newTotal)}"
+    }
+
+    override fun sumPrice(price: Double) {
+
+        var oldSubTotal = mBinding.tvSubTotal.text.toString().split("S/")
+
+        var subTotal = oldSubTotal[1].toDouble() + price
+        var igv = (subTotal * 0.18)
+        var newTotal = (igv + subTotal + 5.0)
+
+        mBinding.tvSubTotal.text = "S/${String.format("%.2f", subTotal)}"
+        mBinding.tvIGV.text = "S/${String.format("%.2f", igv)}"
+        mBinding.tvTotal.text = "S/${String.format("%.2f", newTotal)}"
+    }
+
+    override fun subsTractPrice(price: Double) {
+
+        var oldSubTotal = mBinding.tvSubTotal.text.toString().split("S/")
+
+        var subTotal = (oldSubTotal[1].toDouble() - price)
+        var igv = (subTotal * 0.18)
+        var newTotal = (igv + subTotal + 5.0)
+
+        mBinding.tvSubTotal.text = "S/${String.format("%.2f", subTotal)}"
+        mBinding.tvIGV.text = "S/${String.format("%.2f", igv)}"
+        mBinding.tvTotal.text = "S/${String.format("%.2f", newTotal)}"
     }
 
     private fun getRetrofit(): Retrofit {
