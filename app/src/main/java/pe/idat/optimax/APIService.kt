@@ -1,9 +1,11 @@
 package pe.idat.optimax
 
+import okhttp3.ResponseBody
 import org.json.JSONObject
 import pe.idat.optimax.model.ArticleResponse
 import pe.idat.optimax.model.ClientDto
 import pe.idat.optimax.model.DistrictResponse
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -37,5 +39,8 @@ interface APIService {
     suspend fun postAppointment(@Body hashMap: HashMap<String,String>):Response<*>
 
     @POST("tokens/")
-    suspend fun createToken(@Body jsonObject: JSONObject):Response<*>
+    fun createToken(@Body jsonObject: JSONObject):Call<ResponseBody>
+
+    @POST("Token")
+    suspend fun sendToken(@Body hashMap: HashMap<String, String>): Response<*>
 }

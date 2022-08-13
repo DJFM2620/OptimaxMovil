@@ -30,9 +30,9 @@ class CartFragment: Fragment(), OnClickListener {
 
     private lateinit var mBinding: FragmentCartBinding
     private lateinit var mAdapter: CartArticleAdapter
-    private lateinit var listCartArticles: Array<ArticleCartDto>
+    private  var listQuantities = HashMap<String, Int>()
 
-    private var email: String = ""
+    private lateinit var communicator: Communicator
 
     private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
 
@@ -42,19 +42,12 @@ class CartFragment: Fragment(), OnClickListener {
 
         initRecyclerView()
 
-        /*var total = 0.0
+        communicator = activity as Communicator
 
-        for (item in listCartArticles.indices) {
+        mBinding.btnRegisterOrder.setOnClickListener {
 
-            total += listCartArticles[item].price.toDouble()
+            insertOrder()
         }
-
-        mBinding.tvSubTotal.text = total.roundToInt().toString()
-        mBinding.tvIGV.text = ((total * 0.18).roundToInt()).toString()
-        mBinding.tvTotal.text = (((total + (total * 0.18)) + 5).roundToInt()).toString()*/
-
-        insertOrder()
-
         return mBinding.root
     }
 
@@ -110,92 +103,39 @@ class CartFragment: Fragment(), OnClickListener {
         mBinding.tvTotal.text = "S/${String.format("%.2f", newTotal)}"
     }
 
+    override fun getQuantities(hashMap: HashMap<String, Int>) {
+        listQuantities.clear()
+        for ((key, value) in hashMap) {
+            listQuantities[key] = value
+        }
+    }
+
     private fun getRetrofit(): Retrofit {
 
         return Retrofit.Builder()
             .baseUrl(baseURL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
-            /*.client(getClient())*/
             .build()
-    }
-
-    private fun searchClientByEmail(Email: String){
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val call = getRetrofit().create(APIService::class.java).getClientByEmail("Cliente/$Email")
-            val client = call.body()
-
-            activity?.runOnUiThread{
-                if(call.isSuccessful){
-
-                    if (client != null) {
-                        /*listCodCli.set(0, client)*/
-                    }
-                    else {
-                        Toast.makeText(activity, "El cliente no existe, registrese porfavor", Toast.LENGTH_SHORT).show()
-                    }
-                }else{
-                    showError()
-                }
-            }
-        }
     }
 
    private fun insertOrder(){
 
-        val user = Firebase.auth.currentUser
-        user?.let {
-            email = user.email.toString()
-        }
 
-        mBinding.btnRegisterOrder.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch{
+       val user = Firebase.auth.currentUser
+       var email = user!!.email.toString()
 
-                listCartArticles = arguments?.getSerializable("data") as Array<ArticleCartDto>
+       var total = mBinding.tvTotal.text.toString().split("S/")
+       var totalSplit = total[1].split(".")
 
-                searchClientByEmail(email)
+       val map=HashMap<String,String>()
 
+       map["cod_state"] = "1"
+       map["email_client"] = email
+       map["articles"] = listQuantities.keys.toString()
+       map["quantities"] = listQuantities.values.toString()
+       map["subtotal"] = (totalSplit[0]+totalSplit[1])
 
-                val dateOrder: DateTimeFormatter = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd")
-                } else {
-                    TODO("VERSION.SDK_INT < O")
-                }
-
-                var listCodArticle = mutableListOf<Int>()
-
-                for (item in listCartArticles.indices) {
-
-                    listCodArticle.add(listCartArticles[item].codArticle.toInt())
-                }
-
-                //listCartArticles.get(1).quantity
-                //dateOrder.format(LocalDateTime.now())
-                //listCodCli[0].toString()
-
-                val map=HashMap<String,String>()
-                map["cod_state"] = "1"
-                map["cod_client"] = "33"
-                map["cod_article"] = listCodArticle.toString()
-                map["quantity"] = "10"
-                map["subtotal"] = "500.0"
-
-                val call =getRetrofit().create(APIService::class.java).postnewVenta(map)
-                activity?.runOnUiThread {
-                    if (call.isSuccessful){
-                        Toast.makeText(activity,"La orden ha sido registrado exitosamente",Toast.LENGTH_SHORT).show()
-
-                    }else{
-                        showError()
-                    }
-                }
-            }
-        }
-    }
-
-    private fun showError(){
-        Toast.makeText(activity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+       communicator.sendOrder(map)
     }
 }

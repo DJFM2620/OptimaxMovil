@@ -45,6 +45,8 @@ def anko_version="0.10.8"
 
 dependencies {
 
+    implementation "com.android.volley:volley:1.2.1"
+
     /*==========================================*/
     /* ANDROID DESIGN */
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -84,6 +86,11 @@ dependencies {
 
     /*==========================================*/
     /* RETROFIT */
+
+    implementation 'io.reactivex:rxjava:1.1.6'
+    implementation 'io.reactivex:rxandroid:1.2.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2'

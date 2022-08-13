@@ -30,4 +30,5 @@
     <string name="hint_apellidom">Apellido Materno</string>
     <string name="Profile">Perfil</string>
     <string name="hint_code">Codigo</string>
+
 </resources>

@@ -2,62 +2,28 @@ package pe.idat.optimax.model
 
 import android.content.Context
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import com.android.volley.AuthFailureError
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import org.json.JSONObject
-import pe.idat.optimax.APIService
-import pe.idat.optimax.NullOnEmptyConverterFactory
 import pe.idat.optimax.culqui.Config
 import pe.idat.optimax.culqui.TokenCallBack
-import retrofit2.*
-import retrofit2.converter.gson.GsonConverterFactory
-import java.lang.Exception
-
 
 class Token(s: String) {
 
     var config = Config()
 
-    private var api_key: String? = null
+    private val URL = "tokens/"
+
+    private var api_key: String? = s
 
     private var listener: TokenCallBack? = null
 
-    private fun getGson(): Gson {
-        return GsonBuilder()
-            .setLenient()
-            .create()
-    }
-
-    private fun getRetrofit(): Retrofit {
-
-        val httpClient = OkHttpClient.Builder()
-
-        httpClient.addInterceptor { chain ->
-            val request: Request = chain.request()
-                                        .newBuilder()
-                                        .addHeader("Content-type", "application/json")
-                                        .addHeader("Authorization", "Bearer pk_test_c45c56aa6dc7d27c")
-                                        .build()
-            chain.proceed(request)
-        }
-
-        return Retrofit.Builder()
-            .baseUrl(config.url_base_secure)
-            .client(httpClient.build())
-            .addConverterFactory(NullOnEmptyConverterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
-            /*.client(getClient())*/
-            .build()
-    }
-
     fun createToken(context: Context?, card: Card, listener: TokenCallBack) {
         this.listener = listener
-
+        val requestQueue = Volley.newRequestQueue(context)
         var jsonBody = JSONObject()
         try {
             jsonBody = JSONObject()
@@ -67,8 +33,31 @@ class Token(s: String) {
             jsonBody.put("expiration_year", card.expiration_year)
             jsonBody.put("email", card.email)
 
-        } catch (ex: java.lang.Exception) {
+        } catch (ex: Exception) {
             Log.v("", "ERROR: " + ex.message)
         }
+        val jsonObjectRequest: JsonObjectRequest =
+            object : JsonObjectRequest(Method.POST, config.url_base_secure + URL, jsonBody,
+                Response.Listener { response ->
+                    try {
+                        listener.onSuccess(response)
+                    } catch (ex: Exception) {
+                        listener.onError(ex)
+                    }
+                },
+                Response.ErrorListener { error -> listener.onError(error) }) {
+                @Throws(AuthFailureError::class)
+                override fun getHeaders(): Map<String, String> {
+                    val headers: MutableMap<String, String> = HashMap()
+                    headers["Content-Type"] = "application/json; charset=utf-8"
+                    headers["Authorization"] = "Bearer $api_key"
+                    return headers
+                }
+            }
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(
+            30000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+        requestQueue.add(jsonObjectRequest)
     }
 }

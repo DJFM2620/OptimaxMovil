@@ -49,6 +49,7 @@ class CartArticleAdapter(private var articles: MutableList<ArticleEntity>,
                             }
                             listener.setTotal(sum)
                             quantities.remove("${articleEntity.articleId}")
+                            listener.getQuantities(quantities)
                         }
                     }
                 }
@@ -67,6 +68,7 @@ class CartArticleAdapter(private var articles: MutableList<ArticleEntity>,
 
                 listener.sumPrice(binding.tvPrice.text.toString().toDouble())
                 quantities["${articleEntity.articleId}"] = binding.tvQuantity.text.toString().toInt()
+                listener.getQuantities(quantities)
             }
 
             binding.btnRemoveQuantity.setOnClickListener{
@@ -85,6 +87,7 @@ class CartArticleAdapter(private var articles: MutableList<ArticleEntity>,
                     listener.subsTractPrice(binding.tvPrice.text.toString().toDouble())
 
                     quantities["${articleEntity.articleId}"] = binding.tvQuantity.text.toString().toInt()
+                    listener.getQuantities(quantities)
                 }
             }
         }
@@ -109,10 +112,9 @@ class CartArticleAdapter(private var articles: MutableList<ArticleEntity>,
         for ( i in 0 until articles.size){
 
             sum += articles[i].price.toDouble()
-
         }
         quantities["${item.articleId}"] = item.quantity
-
+        listener.getQuantities(quantities)
         listener.setTotal(sum)
 
         Glide.with(mContext)

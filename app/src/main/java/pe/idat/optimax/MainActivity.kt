@@ -2,6 +2,7 @@ package pe.idat.optimax
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import pe.idat.optimax.databinding.ActivityMainBinding
 import pe.idat.optimax.fragments.*
@@ -44,6 +45,28 @@ class MainActivity : AppCompatActivity(), Communicator{
     }
 
     override fun startFragment(fragment: Fragment) {
+
+        replaceFragment(fragment)
+    }
+
+    override fun passData(total: Int) {
+
+        val bundle = Bundle()
+        bundle.putInt("total", total)
+
+        val fragment = PaymentFragment()
+        fragment.arguments = bundle
+
+        replaceFragment(fragment)
+    }
+
+    override fun sendOrder(hashMap: HashMap<String, String>) {
+
+        val bundle = Bundle()
+        bundle.putSerializable("order", hashMap)
+
+        val fragment = PaymentFragment()
+        fragment.arguments = bundle
 
         replaceFragment(fragment)
     }
