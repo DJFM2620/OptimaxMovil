@@ -135,6 +135,7 @@ class CartFragment: Fragment(), OnClickListener {
        map["articles"] = listQuantities.keys.toString()
        map["quantities"] = listQuantities.values.toString()
        map["subtotal"] = (totalSplit[0]+totalSplit[1])
+       map["totaltv"] = mBinding.tvTotal.text.toString()
 
        communicator.sendOrder(map)
     }

@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +32,8 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
     private val listArticles = mutableListOf<ArticleResponse>()
     private val listCart = mutableListOf<ArticleCartDto>()
 
+    private var mActivity: MainActivity? = null
+
     private lateinit var communicator: Communicator
 
     private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
@@ -41,6 +45,15 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
         mBinding.svArticle.setOnQueryTextListener(this)
         initRecyclerView()
         findAll()
+
+        val imageSlider = mBinding.imgSlider
+        val imageList =ArrayList<SlideModel>()
+
+        imageList.add(SlideModel("https://us.123rf.com/450wm/seoterra/seoterra1312/seoterra131200002/24171162-muchacha-con-estilo-joven-en-las-lentes-%C3%B3pticas-que-presenta-en-estudio-inteligente-y-bellos-espect%C3%A1.jpg"))
+        imageList.add(SlideModel("https://i.pinimg.com/736x/4e/5f/1c/4e5f1c36b68fb55d866e6b147879da9e.jpg"))
+        imageList.add(SlideModel("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNWB0wQ26kMdaoqD8TZeAIUJZEmfZc9m5mJ8-z_brgik0PqJGcwp4Miyvx18Mm8nc859s&usqp=CAU"))
+
+        imageSlider.setImageList(imageList,ScaleTypes.CENTER_CROP)
 
         communicator = activity as Communicator
 
@@ -58,15 +71,7 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
             .baseUrl(baseURL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
-            /*.client(getClient())*/
             .build()
-    }
-
-    private fun getClient(): OkHttpClient {
-
-        val client = OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).build()
-
-        return client
     }
 
     private fun findAll() {

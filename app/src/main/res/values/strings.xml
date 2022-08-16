@@ -30,5 +30,19 @@
     <string name="hint_apellidom">Apellido Materno</string>
     <string name="Profile">Perfil</string>
     <string name="hint_code">Codigo</string>
+    <string name="warning_activate_card">⚠ Recuerda activar tu tarjeta para compras online</string>
+    <string name="data_encrypted"> 🔒 Datos encriptados de extremo a extremo</string>
+    <string name="card_number_hint">Numero de tarjeta</string>
+    <string name="month">Mes</string>
+    <string name="year">Año</string>
+    <string name="CVV">CVV</string>
+    <string name="btn_pay">Pagar</string>
+    <string name="powered_by_culqi">Powered By Culqi</string>
+    <string name="total_pay">TOTAL A PAGAR</string>
+    <string name="text_additional_info">Informacion Adicional</string>
+    <string name="text_info_personal">Informacion Personal</string>
+    <string name="text_cart">Carrito</string>
+    <string name="text_my_orders">Mis Pedidos</string>
+    <string name="text_my_appointment">Mis Citas</string>
 
 </resources>

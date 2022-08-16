@@ -1,6 +1,7 @@
 package pe.idat.optimax.fragments
 
 import android.app.ProgressDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
@@ -48,57 +49,68 @@ class PaymentFragment : Fragment() {
         progress!!.setCancelable(false)
         progress!!.setProgressStyle(ProgressDialog.STYLE_SPINNER)
 
-        mBinding.txtCardNumber.addTextChangedListener(object : TextWatcher {
+        var orderMap: HashMap<String, String> = arguments?.getSerializable("order") as HashMap<String, String>
+
+        mBinding.tvTotal.text = orderMap["totaltv"].toString()
+
+        mBinding.ietCardNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                 if (s.isEmpty()) {
-                    mBinding.txtCvv.isEnabled = true
+                    mBinding.ietCVV.isEnabled = true
                 }
             }
 
             override fun afterTextChanged(s: Editable) {
-                val text = mBinding.txtCardNumber.text.toString()
+                val text = mBinding.ietCardNumber.text.toString()
                 if (s.isEmpty()) {
-                    mBinding.txtCardNumber.setBackgroundResource(R.drawable.border_error)
+                    //mBinding.ietCardNumber.setBackgroundResource(R.drawable.border_error)
+                    mBinding.tilCardNumber.boxStrokeColor = Color.RED
                 }
                 if (validation!!.luhn(text)) {
-                    mBinding.txtCardNumber.setBackgroundResource(R.drawable.border_sucess)
+                    //mBinding.ietCardNumber.setBackgroundResource(R.drawable.border_sucess)
+                    mBinding.tilCardNumber.boxStrokeColor = Color.GREEN
                 } else {
-                    mBinding.txtCardNumber.setBackgroundResource(R.drawable.border_error)
+                    //mBinding.ietCardNumber.setBackgroundResource(R.drawable.border_error)
+                    mBinding.tilCardNumber.boxStrokeColor = Color.RED
                 }
                 val cvv: Int = validation!!.bin(text, mBinding.kindCard)
                 if (cvv > 0) {
-                    mBinding.txtCvv.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(cvv))
-                    mBinding.txtCvv.isEnabled = true
+                    mBinding.ietCVV.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(cvv))
+                    mBinding.ietCVV.isEnabled = true
                 } else {
-                    mBinding.txtCvv.isEnabled = false
-                    mBinding.txtCvv.setText("")
+                    mBinding.ietCVV.isEnabled = false
+                    mBinding.ietCVV.setText("")
                 }
             }
         })
 
-        mBinding.txtYear.addTextChangedListener(object : TextWatcher {
+        mBinding.ietYear.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                val text: String = mBinding.txtYear.text.toString()
+                val text: String = mBinding.ietYear.text.toString()
                 if (validation!!.year(text)) {
-                    mBinding.txtYear.setBackgroundResource(R.drawable.border_error)
+                    //mBinding.ietYear.setBackgroundResource(R.drawable.border_error)
+                    mBinding.tilYear.boxStrokeColor = Color.RED
                 } else {
-                    mBinding.txtYear.setBackgroundResource(R.drawable.border_sucess)
+                    //mBinding.ietYear.setBackgroundResource(R.drawable.border_sucess)
+                    mBinding.tilYear.boxStrokeColor = Color.GREEN
                 }
             }
         })
 
-        mBinding.txtMonth.addTextChangedListener(object : TextWatcher {
+        mBinding.ietMonth.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                val text: String = mBinding.txtMonth.text.toString()
+                val text: String = mBinding.ietMonth.text.toString()
                 if (validation!!.month(text)) {
-                    mBinding.txtMonth.setBackgroundResource(R.drawable.border_error)
+                    //mBinding.ietMonth.setBackgroundResource(R.drawable.border_error)
+                    mBinding.tilMonth.boxStrokeColor = Color.RED
                 } else {
-                    mBinding.txtMonth.setBackgroundResource(R.drawable.border_sucess)
+                    //mBinding.ietMonth.setBackgroundResource(R.drawable.border_sucess)
+                    mBinding.tilMonth.boxStrokeColor = Color.GREEN
                 }
             }
         })
@@ -106,11 +118,11 @@ class PaymentFragment : Fragment() {
         mBinding.btnPay.setOnClickListener {
             progress!!.show()
 
-            val card = Card(mBinding.txtCardNumber.text.toString(),
-                mBinding.txtCvv.text.toString(),
-                mBinding.txtMonth.text.toString(),
-                mBinding.txtYear.text.toString(),
-                mBinding.txtEmail.text.toString())
+            val card = Card(mBinding.ietCardNumber.text.toString(),
+                mBinding.ietCVV.text.toString(),
+                mBinding.ietMonth.text.toString(),
+                mBinding.ietYear.text.toString(),
+                mBinding.ietEmail.text.toString())
 
             val token = Token("pk_test_c45c56aa6dc7d27c")
 
