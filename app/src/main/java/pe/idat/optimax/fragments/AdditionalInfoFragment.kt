@@ -34,13 +34,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
-class AdditionalInfoFragment : Fragment(),OnMapReadyCallback {
+class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mBinding: FragmentAdditionalInfoBinding
     private lateinit var map: GoogleMap
 
     private var currentMarker: Marker? = null
-    private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.41:8040/idat/Api/"
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
@@ -101,7 +101,7 @@ class AdditionalInfoFragment : Fragment(),OnMapReadyCallback {
 
         val coordinates = LatLng(-12.1214598, -77.0269784)
         val marker = MarkerOptions().position(coordinates)
-            .title("Optimax 7u7")
+            .title("Optimax")
 
         currentMarker = map.addMarker(marker)
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 17f), 3000, null)

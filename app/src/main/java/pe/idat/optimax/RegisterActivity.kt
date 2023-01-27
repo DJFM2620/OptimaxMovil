@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var mBinding: ActivityRegisterBinding
     private lateinit var auth: FirebaseAuth
 
-    private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.41:8040/idat/Api/"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

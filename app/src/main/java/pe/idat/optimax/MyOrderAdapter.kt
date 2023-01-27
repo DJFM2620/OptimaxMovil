@@ -36,7 +36,7 @@ class MyOrderAdapter(private val orders: MutableList<MyOrderResponse>): Recycler
         holder.binding.tvDate.text = item.date
         holder.binding.tvOrderId.text = item.orderId.toString()
         holder.binding.tvTotal.text = item.subTotal.toString()
-        holder.binding.tvState.text = item.stateId.toString()
+        holder.binding.tvState.text = item.state
     }
 
     override fun getItemCount(): Int {

@@ -33,7 +33,7 @@ class PaymentFragment : Fragment() {
 
     private lateinit var mBinding: FragmentPaymentBinding
 
-    private val baseURL: String = "http://192.168.1.16:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.41:8040/idat/Api/"
 
     var validation: Validation? = null
     var progress: ProgressDialog? = null

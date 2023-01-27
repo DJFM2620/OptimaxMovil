@@ -1,9 +1,6 @@
 package pe.idat.optimax
 
-import okhttp3.ResponseBody
-import org.json.JSONObject
 import pe.idat.optimax.model.*
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
 
