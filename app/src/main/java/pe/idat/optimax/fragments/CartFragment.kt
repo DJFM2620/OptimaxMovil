@@ -34,7 +34,7 @@ class CartFragment: Fragment(), OnClickListener {
 
     private lateinit var communicator: Communicator
 
-    private val baseURL: String = "http://192.168.1.41:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.77:8040/idat/Api/"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

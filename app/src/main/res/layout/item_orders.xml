@@ -14,37 +14,70 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="Fecha: "
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:paddingBottom="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
             android:id="@+id/tvDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="2022-01-10"
+            android:layout_marginTop="20dp"
             android:paddingBottom="10dp"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:text="2020-12-12"
+            app:layout_constraintStart_toEndOf="@id/lblDate"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/lblOrderId"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:layout_marginStart="16dp"
+            android:text="Codigo: "
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/lblTotal"
+            app:layout_constraintTop_toBottomOf="@+id/lblDate" />
 
         <TextView
             android:id="@+id/tvOrderId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="22657883120582"
+            android:text="454565"
             android:textSize="20sp"
+            android:paddingTop="5dp"
             android:paddingBottom="15dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/lblOrderId"
             app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+        <TextView
+            android:id="@+id/lblTotal"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+            android:layout_marginStart="16dp"
+            android:text="Total: "
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tvTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1990.0"
+            android:text="S/550"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/lblTotal"
+            app:layout_constraintTop_toBottomOf="@+id/tvOrderId" />
 
         <TextView
             android:id="@+id/tvState"

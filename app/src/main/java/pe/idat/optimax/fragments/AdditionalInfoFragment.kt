@@ -40,7 +40,7 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
     private lateinit var map: GoogleMap
 
     private var currentMarker: Marker? = null
-    private val baseURL: String = "http://192.168.1.41:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.77:8040/idat/Api/"
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
@@ -83,7 +83,6 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
         val coordinates = LatLng(-12.1214598, -77.0269784)
 
         createMarker(coordinates)
-        createPolyLines()
         enableLocation()
 
         map.setOnMapClickListener {
@@ -116,23 +115,6 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
         mBinding.ietDirection.setText(addresses[0].getAddressLine(0).toString())
 
         return addresses[0].getAddressLine(0).toString()
-    }
-
-    private fun createPolyLines() {
-
-        val polylineOptions = PolylineOptions().add(LatLng(-12.120371025830151, -77.02891623165519))
-            .add(LatLng(-12.120463643485555, -77.0242790062522))
-            .add(LatLng(-12.123178233439795, -77.02356134062015))
-            .add(LatLng(-12.122853056720428, -77.02915106375319))
-            .add(LatLng(-12.120371025830151, -77.02891623165519))
-            .color(ContextCompat.getColor(requireContext(), R.color.polyLine))
-
-        val pattern = listOf(
-            Dash(50f), Gap(10f)
-        )
-
-        val polyline = map.addPolyline(polylineOptions)
-        polyline.pattern = pattern
     }
 
     private fun isLocationPermissionGranted() = context?.let {

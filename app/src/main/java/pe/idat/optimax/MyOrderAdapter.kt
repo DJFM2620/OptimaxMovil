@@ -33,9 +33,14 @@ class MyOrderAdapter(private val orders: MutableList<MyOrderResponse>): Recycler
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = orders[position]
 
+        var subtotal = item.subTotal
+        var igv = subtotal * 0.18
+        var delivery = 5.0
+        var total = subtotal + igv + delivery
+
         holder.binding.tvDate.text = item.date
         holder.binding.tvOrderId.text = item.orderId.toString()
-        holder.binding.tvTotal.text = item.subTotal.toString()
+        holder.binding.tvTotal.text = total.toString()
         holder.binding.tvState.text = item.state
     }
 

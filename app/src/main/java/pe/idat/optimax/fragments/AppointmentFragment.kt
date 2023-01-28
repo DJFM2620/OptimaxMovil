@@ -22,10 +22,11 @@ import pe.idat.optimax.databinding.FragmentAppointmentBinding
 import pe.idat.optimax.model.ArticleResponse
 import java.util.HashMap
 
-class AppointmentFragment : Fragment() {
+class
+AppointmentFragment : Fragment() {
 
     private lateinit var mBinding: FragmentAppointmentBinding
-    private val baseURL: String = "http://192.168.1.41:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.77:8040/idat/Api/"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

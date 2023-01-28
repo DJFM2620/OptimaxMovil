@@ -2,6 +2,7 @@ package pe.idat.optimax.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
@@ -38,8 +40,9 @@ import java.util.*
 class ProfileFragment : Fragment() {
 
     private lateinit var mBinding: FragmentProfileBinding
+    private lateinit var auth: FirebaseAuth
 
-    private val baseURL: String = "http://192.168.1.41:8040/idat/Api/"
+    private val baseURL: String = "http://192.168.1.77:8040/idat/Api/"
     private lateinit var communicator: Communicator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -67,11 +70,18 @@ class ProfileFragment : Fragment() {
                 1L -> communicator.startFragment(AdditionalInfoFragment())
                 2L -> communicator.startFragment(MyAppointmentFragment())
                 3L -> communicator.startFragment(MyOrdersFragment())
+                4L -> {
+                    auth = Firebase.auth
+                    auth.signOut()
+                    val intent = Intent(requireActivity(), LoginActivity::class.java).apply {
+                    }
+                    startActivity(intent)
+                }
+
                 else -> {
                 }
             }
         }
-
         getClientByEmail()
 
         return mBinding.root
