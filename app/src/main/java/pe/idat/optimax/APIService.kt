@@ -12,23 +12,26 @@ interface APIService {
     @GET
     suspend fun getArticlesById(@Url url: String):Response<ArticleResponse>
 
-    @GET
-    suspend fun getDistrictById(@Url url: String):Response<DistrictResponse>
-
     @POST("Cliente/Agregar")
     suspend fun postNewClient(@Body clientDto: ClientDto): Response<*>
 
-    @POST("InsertarVenta")
-    suspend fun postnewVenta(@Body hashMap: HashMap<String,String>):Response<*>
+    @GET
+    suspend fun getDistricts(@Url url: String): Response<List<DistrictResponse>>
+
+    @GET
+    suspend fun getDirectionClient(@Url url: String): Response<String>
+
+    @GET
+    suspend fun getValidateClientByDni(@Url url: String):Response<Int>
+
+    @GET
+    suspend fun getCodClientByDni(@Url url: String): Response<String>
 
     @GET
     suspend fun getClientByEmail(@Url url: String):Response<ClientDto>
 
-    @POST("Recepcion")
-    suspend fun postRecepcion(@Body hashMap: HashMap<String,String>):Response<*>
-
-    @PUT("Cliente/Actualizar")
-    suspend fun putUpdateClient(@Body clientDto: ClientDto):Response<*>
+    @POST("InsertarVenta")
+    suspend fun postnewVenta(@Body hashMap: HashMap<String,String>):Response<*>
 
     @POST("Cita/Registrar")
     suspend fun postAppointment(@Body hashMap: HashMap<String,String>):Response<*>

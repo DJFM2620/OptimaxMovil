@@ -6,5 +6,6 @@ data class ClientAddInfoDto (
     @SerializedName("celular")var phone: Int = 0,
     @SerializedName("email")var email: String,
     @SerializedName("direccion")var direction: String = "",
-    @SerializedName("distrito")var district: DistrictResponse
+    @SerializedName("dni")var DNI: Int = 0,
+    @SerializedName("distrito")var district: DistrictDto
     )

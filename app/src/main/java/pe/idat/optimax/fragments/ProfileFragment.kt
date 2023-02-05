@@ -99,11 +99,10 @@ class ProfileFragment : Fragment() {
             .baseUrl(baseURL)
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create(getGson()))
-            /*.client(getClient())*/
             .build()
     }
 
-    fun getClientByEmail(){
+    private fun getClientByEmail(){
 
         val user = Firebase.auth.currentUser
         var email = user!!.email.toString()

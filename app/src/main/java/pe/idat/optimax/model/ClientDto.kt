@@ -12,5 +12,5 @@ data class ClientDto(
                     @SerializedName("email")var email: String,
                     @SerializedName("ruc")var ruc: String = "",
                     @SerializedName("direccion")var direction: String = "",
-                    @SerializedName("distrito")var district: DistrictResponse
+                    @SerializedName("distrito")var district: DistrictDto
                     )

@@ -52,6 +52,7 @@ class PaymentFragment : Fragment() {
         var orderMap: HashMap<String, String> = arguments?.getSerializable("order") as HashMap<String, String>
 
         mBinding.tvTotal.text = orderMap["totaltv"].toString()
+        mBinding.tvDirection.text =  "Direccion de envio: ${orderMap["direction"]}"
 
         mBinding.ietCardNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}

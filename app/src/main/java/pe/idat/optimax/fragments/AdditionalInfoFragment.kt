@@ -5,9 +5,12 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -29,6 +32,7 @@ import pe.idat.optimax.NullOnEmptyConverterFactory
 import pe.idat.optimax.R
 import pe.idat.optimax.databinding.FragmentAdditionalInfoBinding
 import pe.idat.optimax.model.ClientAddInfoDto
+import pe.idat.optimax.model.DistrictDto
 import pe.idat.optimax.model.DistrictResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -38,12 +42,48 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mBinding: FragmentAdditionalInfoBinding
     private lateinit var map: GoogleMap
+    private lateinit var spinnerAdapter: ArrayAdapter<String>
 
     private var currentMarker: Marker? = null
     private val baseURL: String = "http://192.168.1.77:8040/idat/Api/"
+    private var dniResponse: Int = 0
+    private val districtMap = mutableMapOf<String, Int>()
+    private var district: Int = 0
+    private var districtClien: Int = 0
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
+    }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        mBinding = FragmentAdditionalInfoBinding.inflate(inflater,container,false)
+
+        val supportMapFragment =
+            childFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment?
+        supportMapFragment!!.getMapAsync(this)
+
+        spinnerAdapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        mBinding.spnDistricts.adapter = spinnerAdapter
+
+        mBinding.spnDistricts.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent?.getItemAtPosition(position)
+                val selectedCode = districtMap[selectedItem]
+
+                district = selectedCode!!
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+            }
+        }
+
+        getClientByEmail()
+        updateClient()
+        getDistricts()
+
+        return mBinding.root
     }
 
     private fun getGson(): Gson {
@@ -63,19 +103,7 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
             .addConverterFactory(GsonConverterFactory.create(getGson()))
             .build()
     }
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        mBinding = FragmentAdditionalInfoBinding.inflate(inflater,container,false)
-
-        val supportMapFragment =
-            childFragmentManager.findFragmentById(R.id.google_map) as SupportMapFragment?
-        supportMapFragment!!.getMapAsync(this)
-
-        getClientByEmail()
-        updateClient()
-
-        return mBinding.root
-    }
     override fun onMapReady(googleMap: GoogleMap) {
 
         map = googleMap
@@ -177,6 +205,34 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
+    private fun getKey(value: Int){
+
+        for (key in districtMap.keys)
+        {
+            if (value == districtMap[key]) {
+                mBinding.spnDistricts.setSelection(spinnerAdapter.getPosition(key))
+            }
+        }
+    }
+
+    private fun getDistricts() {
+
+        CoroutineScope(Dispatchers.IO).launch {
+
+            val call = getRetrofit().create(APIService::class.java).getDistricts("Distritos")
+            val listDistrictResponse: List<DistrictResponse> = call.body() ?: emptyList()
+
+            requireActivity().runOnUiThread {
+                if (call.isSuccessful) {
+                    for (district in listDistrictResponse) {
+                        spinnerAdapter.add(district.name)
+                        districtMap[district.name] = district.codDistrict
+                    }
+                }
+            }
+        }
+    }
+
     private fun updateClient() {
 
         mBinding.btnUpdate.setOnClickListener {
@@ -187,19 +243,23 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
                 var email = mBinding.ietEmail.text?.trim().toString()
                 var direction = mBinding.ietDirection.text?.trim().toString()
 
-                var district = DistrictResponse(codDistrict = 1, name = "District")
+                var districtDto = DistrictDto(codDistrict = district)
 
                 var client = ClientAddInfoDto(
                     email = email,
                     phone = phone,
                     direction = direction,
-                    district = district,
+                    DNI = dniResponse,
+                    district = districtDto
                 )
 
                 val call = getRetrofit().create(APIService::class.java).putUpdateAddInfoClient(client)
                 activity?.runOnUiThread {
                     if (call.isSuccessful) {
                         getGson()
+
+                        Firebase.auth.currentUser?.updateEmail(email)
+
                         Toast.makeText(activity,"Sus datos han sido actualizados exitosamente...!", Toast.LENGTH_SHORT).show()
                     } else {
                         showError()
@@ -223,10 +283,17 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
                 if (call.isSuccessful) {
                     getGson()
                     if (client != null) {
+
                         mBinding.ietDirection.setText(client.direction)
                         mBinding.ietPhone.setText(client.phone.toString())
-                        mBinding.ietDistrict.setText(client.district.name)
+
+                        districtClien = client.district.codDistrict
+
+                        getKey(client.district.codDistrict)
+
                         mBinding.ietEmail.setText(client.email)
+                        dniResponse = client.DNI
+
                     } else {
                         Toast.makeText(activity,
                             "El cliente no existe, registrese porfavor",
