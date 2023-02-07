@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import pe.idat.optimax.databinding.ItemAppointmentBinding
-import pe.idat.optimax.databinding.ItemOrdersBinding
 import pe.idat.optimax.model.MyAppointmentResponse
-import pe.idat.optimax.model.MyOrderResponse
 
 class MyAppointmentAdapter (private val appointments: MutableList<MyAppointmentResponse>): RecyclerView.Adapter<MyAppointmentAdapter.ViewHolder>() {
 

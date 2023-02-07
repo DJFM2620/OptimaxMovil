@@ -5,8 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
-import pe.idat.optimax.databinding.ItemArticleCartBinding
 import pe.idat.optimax.databinding.ItemListOptionsBinding
 import pe.idat.optimax.model.ListViewOption
 

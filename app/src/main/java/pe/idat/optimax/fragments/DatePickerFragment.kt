@@ -3,16 +3,12 @@ package pe.idat.optimax.fragments
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.os.Bundle
-import android.widget.DatePicker
 import androidx.fragment.app.DialogFragment
-import java.text.SimpleDateFormat
 import java.util.*
-
 
 class DatePickerFragment: DialogFragment() {
 
     private var listener: DatePickerDialog.OnDateSetListener? = null
-    private var simpleDateFormat: SimpleDateFormat? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
 
@@ -32,6 +28,4 @@ class DatePickerFragment: DialogFragment() {
            return fragment
        }
    }
-
-
 }

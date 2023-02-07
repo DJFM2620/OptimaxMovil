@@ -1,6 +1,5 @@
 package pe.idat.optimax.fragments
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,15 +13,11 @@ import com.denzcoskun.imageslider.models.SlideModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
 import pe.idat.optimax.*
 import pe.idat.optimax.databinding.FragmentHomeBinding
-import pe.idat.optimax.model.ArticleCartDto
 import pe.idat.optimax.model.ArticleResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
@@ -30,9 +25,6 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
     private lateinit var mBinding: FragmentHomeBinding
     private lateinit var mAdapter: ArticleAdapter
     private val listArticles = mutableListOf<ArticleResponse>()
-    private val listCart = mutableListOf<ArticleCartDto>()
-
-    private var mActivity: MainActivity? = null
 
     private lateinit var communicator: Communicator
 
@@ -87,7 +79,7 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
                     listArticles.addAll(listArticleResponse)
                     mAdapter.notifyDataSetChanged()
                 } else {
-                    Toast.makeText( activity, "Error al listar UwU", Toast.LENGTH_SHORT).show()
+                    Toast.makeText( activity, "Hubo un error al cargar los articulos, contacte con Soporte Tecnico, porfavor...", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -141,6 +133,6 @@ class HomeFragment : Fragment() , SearchView.OnQueryTextListener {
     }
 
     private fun showError(){
-        Toast.makeText(activity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Hubo un error al buscar el articulo, contacte con Soporte Tecnico, porfavor...", Toast.LENGTH_SHORT).show()
     }
 }

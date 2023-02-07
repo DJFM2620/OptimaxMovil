@@ -25,9 +25,6 @@ interface APIService {
     suspend fun getValidateClientByDni(@Url url: String):Response<Int>
 
     @GET
-    suspend fun getCodClientByDni(@Url url: String): Response<String>
-
-    @GET
     suspend fun getClientByEmail(@Url url: String):Response<ClientDto>
 
     @POST("InsertarVenta")

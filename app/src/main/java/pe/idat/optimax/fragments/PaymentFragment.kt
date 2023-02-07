@@ -6,21 +6,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import pe.idat.optimax.APIService
 import pe.idat.optimax.NullOnEmptyConverterFactory
-import pe.idat.optimax.R
 import pe.idat.optimax.culqui.TokenCallBack
 import pe.idat.optimax.culqui.Validation
 import pe.idat.optimax.databinding.FragmentPaymentBinding
@@ -65,20 +60,23 @@ class PaymentFragment : Fragment() {
             override fun afterTextChanged(s: Editable) {
                 val text = mBinding.ietCardNumber.text.toString()
                 if (s.isEmpty()) {
-                    //mBinding.ietCardNumber.setBackgroundResource(R.drawable.border_error)
+
                     mBinding.tilCardNumber.boxStrokeColor = Color.RED
                 }
                 if (validation!!.luhn(text)) {
-                    //mBinding.ietCardNumber.setBackgroundResource(R.drawable.border_sucess)
+
                     mBinding.tilCardNumber.boxStrokeColor = Color.GREEN
+
                 } else {
-                    //mBinding.ietCardNumber.setBackgroundResource(R.drawable.border_error)
+
                     mBinding.tilCardNumber.boxStrokeColor = Color.RED
                 }
                 val cvv: Int = validation!!.bin(text, mBinding.kindCard)
                 if (cvv > 0) {
+
                     mBinding.ietCVV.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(cvv))
                     mBinding.ietCVV.isEnabled = true
+
                 } else {
                     mBinding.ietCVV.isEnabled = false
                     mBinding.ietCVV.setText("")
@@ -92,10 +90,10 @@ class PaymentFragment : Fragment() {
             override fun afterTextChanged(s: Editable) {
                 val text: String = mBinding.ietYear.text.toString()
                 if (validation!!.year(text)) {
-                    //mBinding.ietYear.setBackgroundResource(R.drawable.border_error)
+
                     mBinding.tilYear.boxStrokeColor = Color.RED
                 } else {
-                    //mBinding.ietYear.setBackgroundResource(R.drawable.border_sucess)
+
                     mBinding.tilYear.boxStrokeColor = Color.GREEN
                 }
             }
@@ -107,10 +105,10 @@ class PaymentFragment : Fragment() {
             override fun afterTextChanged(s: Editable) {
                 val text: String = mBinding.ietMonth.text.toString()
                 if (validation!!.month(text)) {
-                    //mBinding.ietMonth.setBackgroundResource(R.drawable.border_error)
+
                     mBinding.tilMonth.boxStrokeColor = Color.RED
                 } else {
-                    //mBinding.ietMonth.setBackgroundResource(R.drawable.border_sucess)
+
                     mBinding.tilMonth.boxStrokeColor = Color.GREEN
                 }
             }

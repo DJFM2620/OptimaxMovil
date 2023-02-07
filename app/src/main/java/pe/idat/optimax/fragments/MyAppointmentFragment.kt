@@ -13,11 +13,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pe.idat.optimax.*
-import pe.idat.optimax.databinding.FragmentHomeBinding
 import pe.idat.optimax.databinding.FragmentMyAppointmentBinding
-import pe.idat.optimax.model.ArticleResponse
 import pe.idat.optimax.model.MyAppointmentResponse
-import pe.idat.optimax.model.MyOrderResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -71,7 +68,7 @@ class MyAppointmentFragment : Fragment() {
                     listAppointments.addAll(listAppointmentResponse)
                     mAdapter.notifyDataSetChanged()
                 } else {
-                    Toast.makeText( activity, "Error al listar UwU", Toast.LENGTH_SHORT).show()
+                    Toast.makeText( activity, "Hubo un error al listar las citas, contacte con Soporte Tecnico, porfavor...", Toast.LENGTH_SHORT).show()
                 }
             }
         }

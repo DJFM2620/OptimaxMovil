@@ -13,11 +13,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pe.idat.optimax.APIService
-import pe.idat.optimax.ArticleAdapter
 import pe.idat.optimax.MyOrderAdapter
 import pe.idat.optimax.NullOnEmptyConverterFactory
 import pe.idat.optimax.databinding.FragmentMyOrdersBinding
-import pe.idat.optimax.model.ArticleResponse
 import pe.idat.optimax.model.MyOrderResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -72,7 +70,7 @@ class MyOrdersFragment : Fragment() {
                     listOrders.addAll(listOrdersResponse)
                     mAdapter.notifyDataSetChanged()
                 } else {
-                    Toast.makeText( activity, "Error al listar UwU", Toast.LENGTH_SHORT).show()
+                    Toast.makeText( activity, "Hubo un error al listar los pedidos, contacte con Soporte Tecnico, porfavor...", Toast.LENGTH_SHORT).show()
                 }
             }
         }

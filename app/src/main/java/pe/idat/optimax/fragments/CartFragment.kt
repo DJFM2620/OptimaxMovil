@@ -1,19 +1,15 @@
 package pe.idat.optimax.fragments
 
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,14 +17,9 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import pe.idat.optimax.*
 import pe.idat.optimax.databinding.FragmentCartBinding
-import pe.idat.optimax.model.ArticleCartDto
-import pe.idat.optimax.model.ArticleResponse
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.time.format.DateTimeFormatter
 import kotlin.collections.HashMap
-import kotlin.math.roundToInt
 
 class CartFragment: Fragment(), OnClickListener {
 

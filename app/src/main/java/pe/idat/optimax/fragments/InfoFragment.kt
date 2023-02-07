@@ -21,7 +21,6 @@ import pe.idat.optimax.model.ClientInfoDto
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class InfoFragment : Fragment() {
 
     private lateinit var mBinding: FragmentInfoBinding
@@ -77,7 +76,6 @@ class InfoFragment : Fragment() {
                         getGson()
                         Toast.makeText(activity,"Sus datos han sido actualizados exitosamente...!", Toast.LENGTH_SHORT).show()
                     } else {
-                        Log.d("mensaje","no se pudo...")
                         showError()
                     }
                 }
@@ -114,6 +112,6 @@ class InfoFragment : Fragment() {
     }
 
     private fun showError() {
-        Toast.makeText(activity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Ha ocurrido un error al cargar los datos, contacte con Soporte Tecnico, porfavor...", Toast.LENGTH_SHORT).show()
     }
 }

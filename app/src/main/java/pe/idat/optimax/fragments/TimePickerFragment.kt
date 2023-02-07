@@ -4,10 +4,9 @@ import android.app.Dialog
 import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import java.text.SimpleDateFormat
 import java.util.*
 
-class TimePickerFragment():DialogFragment() {
+class TimePickerFragment:DialogFragment() {
 
     private var listener :TimePickerDialog.OnTimeSetListener? = null
 
@@ -16,17 +15,15 @@ class TimePickerFragment():DialogFragment() {
         val hour = Calendar.HOUR
         val minute = Calendar.MINUTE
 
-
-     return TimePickerDialog(requireActivity(),listener,hour,minute,true)
+        return TimePickerDialog(requireActivity(),listener,hour,minute,true)
     }
 
     companion object{
         fun newInstance(listener: TimePickerDialog.OnTimeSetListener):TimePickerFragment {
-            val fragment =TimePickerFragment()
+            val fragment = TimePickerFragment()
             fragment.listener = listener
 
             return fragment
         }
     }
-
 }

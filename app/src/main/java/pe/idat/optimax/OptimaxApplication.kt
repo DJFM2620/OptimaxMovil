@@ -14,7 +14,6 @@ class OptimaxApplication: Application()
     override fun onCreate() {
         super.onCreate()
 
-
         //cargar database
         database=Room
             .databaseBuilder(this,OptimaxDatabase::class.java,"OptimaxDatabase")

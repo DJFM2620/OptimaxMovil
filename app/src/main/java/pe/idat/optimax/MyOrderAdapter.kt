@@ -5,12 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import org.jetbrains.anko.doAsync
 import pe.idat.optimax.databinding.ItemOrdersBinding
-import pe.idat.optimax.model.ArticleEntity
-import pe.idat.optimax.model.ArticleResponse
 import pe.idat.optimax.model.MyOrderResponse
 
 class MyOrderAdapter(private val orders: MutableList<MyOrderResponse>): RecyclerView.Adapter<MyOrderAdapter.ViewHolder>() {

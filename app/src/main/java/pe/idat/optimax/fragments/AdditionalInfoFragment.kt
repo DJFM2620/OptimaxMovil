@@ -5,7 +5,6 @@ import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +48,7 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
     private var dniResponse: Int = 0
     private val districtMap = mutableMapOf<String, Int>()
     private var district: Int = 0
-    private var districtClien: Int = 0
+    private var districtClient: Int = 0
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
@@ -92,7 +91,7 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
             .create()
     }
     private fun showError() {
-        Toast.makeText(activity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Ha ocurrido un error, contacte con Soporte Tecnico, porfavor...", Toast.LENGTH_SHORT).show()
     }
 
     private fun getRetrofit(): Retrofit {
@@ -126,11 +125,6 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
 
     private fun createMarker(latLong: LatLng) {
 
-        val coordinates = LatLng(-12.1214598, -77.0269784)
-        val marker = MarkerOptions().position(coordinates)
-            .title("Optimax")
-
-        currentMarker = map.addMarker(marker)
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLong, 17f), 3000, null)
         currentMarker?.showInfoWindow()
     }
@@ -287,7 +281,7 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
                         mBinding.ietDirection.setText(client.direction)
                         mBinding.ietPhone.setText(client.phone.toString())
 
-                        districtClien = client.district.codDistrict
+                        districtClient = client.district.codDistrict
 
                         getKey(client.district.codDistrict)
 
@@ -295,9 +289,7 @@ class AdditionalInfoFragment : Fragment(), OnMapReadyCallback {
                         dniResponse = client.DNI
 
                     } else {
-                        Toast.makeText(activity,
-                            "El cliente no existe, registrese porfavor",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(activity,"Hubo un error al cargar los datos, contacte con Soporte Tecnico, porfavor...", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     showError()
