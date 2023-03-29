@@ -43,8 +43,10 @@ class RegisterActivity : AppCompatActivity() {
 
         mBinding.spnDistricts.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val selectedItem = parent?.getItemAtPosition(position)
-                val selectedCode = districtMap[selectedItem]
+                val selectedItem = parent?.getItemAtPosition(position) // Obtenemos el item(distrito) mediante su posicion
+                val selectedCode = districtMap[selectedItem] // El selectedCode almacenara el codigo del distrito que esta en la lista
+                // districtMap = [Chorrillos: 1, Surco: 2]
+                // districtMap[selectedItem] = districtMap["Chorrillos"] --> 2
 
                 district = selectedCode!!
             }
@@ -179,13 +181,75 @@ class RegisterActivity : AppCompatActivity() {
             .create()
 
         return Retrofit.Builder()
-            .baseUrl(baseURL)
+            .baseUrl(baseURL) //Se configura URL Base para hacer las consultas
             .addConverterFactory(NullOnEmptyConverterFactory())
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }
 
-    private fun validateClientExistence(){
+    private fun getDistricts() { //Sirve para obtener todos los distritos que hay en la base de datos
+
+        // SpinnerAdaptar sirve para crear un adaptador para el Spinner(ComboBox) y este sirve para poder visualizar los datos en el spinner
+        // Ya que el adapter contiene los datos a mostrar
+        // @RegisterActivity es el contexto, el sitio en donde esta el Spinner
+        // android.R.layout.simple_spinner_item --> Es un diseño predefinido para cada elemento de la lista
+        // simple_spinner_dropdown_item --> Es el diseño se abre el spinner
+        val spinnerAdapter = ArrayAdapter<String>(this@RegisterActivity, android.R.layout.simple_spinner_item)
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        mBinding.spnDistricts.adapter = spinnerAdapter // Seteamos el adaptador
+
+        CoroutineScope(Dispatchers.IO).launch { // Se crea una corutina
+
+            // Creamos la consulta a realizar y la ejecutamos
+            val call = getRetrofit().create(APIService::class.java).getDistricts("Distritos")
+
+            //Creamos una lista que almacenera los distritos, si la lista no llega, entonces, devolvera una vacia
+            val listDistrictResponse: List<DistrictResponse> = call.body() ?: emptyList()
+
+            runOnUiThread { //Se crea una ejecucion en el hilo principal
+                if (call.isSuccessful) { //Si la llamada(call) o ejecucion es exitosa
+                    for (district in listDistrictResponse) { //Se recorre la lista cargada
+                        spinnerAdapter.add(district.name) // Al spinnerAdapter, que acepta strings, le añadimos el nombre distrito
+
+                        /*
+                            El spinner no da la opcion de asignar un codigo para cada item, asi que se crea una lista para relacionar
+                            Cada distrito con su mismo codigo
+                         */
+                        districtMap[district.name] = district.codDistrict
+                    }
+                }
+            }
+        }
+    }
+
+    private fun validateUserFirebase(email: String){ //Primero se valida en el Firebase si existe el usuario o no
+
+        // Instanciamos el FirebaseAuth con la propiedad "auth"
+        auth = Firebase.auth
+
+        auth.fetchSignInMethodsForEmail(email) // Hacemos un recorrido a todos los metodos con el email ingresado como parametro
+            .addOnCompleteListener { task -> // Evento que ejecuta un codigo cuando se completa el for
+                if (task.isSuccessful) { // Si la busqueda se satisfactoria
+
+                    // creamos una variable mutableList() que almacenara los metodos que esten relacionados al email ingresado
+                    val signInMethods = task.result?.signInMethods
+
+                    // Validamos si la lista esta vacio o es nula, si es vacia significa que el email no existe
+                    if (signInMethods.isNullOrEmpty()) {
+
+                        // Como no existe el email en el Firebase pasamos a la siguiente funcion de validacion
+                        validateClientExistence()
+
+                    } else {
+                        showAlert("Informacion", "Lo sentimos, el correo electrónico que ha ingresado ya está en uso por otro usuario.")
+                    }
+                } else {
+                    showAlert("Error", "Lo sentimos, hubo problemas al verificar los datos.")
+                }
+            }
+    }
+
+    private fun validateClientExistence(){ //Validamos si el usuario existe en la BD
 
         var dni = mBinding.ietDni.text.toString().trim()
 
@@ -196,32 +260,10 @@ class RegisterActivity : AppCompatActivity() {
 
             runOnUiThread {
                 if (call.isSuccessful){
-                    if(response == 0){
+                    if(response == 0){ //No existe
                         insertClient()
                     }else {
                         updateClient()//Actualizamos el Email del cliente
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getDistricts() {
-
-        val spinnerAdapter = ArrayAdapter<String>(this@RegisterActivity, android.R.layout.simple_spinner_item)
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mBinding.spnDistricts.adapter = spinnerAdapter
-
-        CoroutineScope(Dispatchers.IO).launch {
-
-            val call = getRetrofit().create(APIService::class.java).getDistricts("Distritos")
-            val listDistrictResponse: List<DistrictResponse> = call.body() ?: emptyList()
-
-            runOnUiThread {
-                if (call.isSuccessful) {
-                    for (district in listDistrictResponse) {
-                        spinnerAdapter.add(district.name)
-                        districtMap[district.name] = district.codDistrict
                     }
                 }
             }
@@ -250,7 +292,7 @@ class RegisterActivity : AppCompatActivity() {
 
             runOnUiThread {
                 if (call.isSuccessful) {
-                    createUser(email, pass)
+                    createUser(email, pass) //No actualizamos el email en Firebase Auth porque eso se hace en el Profile
                     showAlert("Usuario Creado", "Nuestras verificaciones revelaron que posee una cuenta en nuestro sitio web. Con los datos que usted nos brinda aquí, nos esforzaremos por brindarle una actualización majestuosa en su perfil en línea.")
                 } else {
                     showAlert("Error", "Hubo un problema al crear el usuario, intentelo dentro de unos minutos")
@@ -299,27 +341,6 @@ class RegisterActivity : AppCompatActivity() {
                 showAlert("Error", "Hubo un problema al crear el usuario, intentelo dentro de unos minutos")
             }
         }
-    }
-
-    private fun validateUserFirebase(email: String){
-
-        auth = Firebase.auth
-
-        auth.fetchSignInMethodsForEmail(email)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val signInMethods = task.result?.signInMethods
-                    if (signInMethods.isNullOrEmpty()) {
-
-                        validateClientExistence()
-
-                    } else {
-                        showAlert("Informacion", "Lo sentimos, el correo electrónico que ha ingresado ya está en uso por otro usuario.")
-                    }
-                } else {
-                    showAlert("Error", "Lo sentimos, hubo problemas al verificar los datos.")
-                }
-            }
     }
 
     private fun showHome(email: String, pass: String){

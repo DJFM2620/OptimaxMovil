@@ -136,6 +136,7 @@ class PaymentFragment : Fragment() {
                         map["email"] = orderMap["email_client"].toString()
 
                         CoroutineScope(Dispatchers.IO).launch {
+
                             val call = getRetrofit().create(APIService::class.java).sendToken(map)
                             if(call.isSuccessful){
 

@@ -61,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand_medium"
                 android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:maxLength="9"
+                android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner

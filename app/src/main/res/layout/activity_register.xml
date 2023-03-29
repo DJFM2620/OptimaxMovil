@@ -40,7 +40,8 @@
                android:layout_height="wrap_content"
                android:fontFamily="@font/quicksand_medium"
                android:imeOptions="actionNext"
-               android:inputType="text" />
+               android:inputType="text"
+               android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
 
        </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,7 +66,8 @@
                    android:layout_height="wrap_content"
                    android:fontFamily="@font/quicksand_medium"
                    android:imeOptions="actionNext"
-                   android:inputType="text" />
+                   android:inputType="text"
+                   android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
 
            </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,7 +87,8 @@
                    android:layout_height="wrap_content"
                    android:fontFamily="@font/quicksand_medium"
                    android:imeOptions="actionNext"
-                   android:inputType="text" />
+                   android:inputType="text"
+                   android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"/>
 
            </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,7 +109,7 @@
                android:layout_height="wrap_content"
                android:fontFamily="@font/quicksand_medium"
                android:imeOptions="actionNext"
-               android:inputType="text" />
+               android:inputType="textEmailAddress" />
 
        </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +128,7 @@
                android:fontFamily="@font/quicksand_medium"
                android:maxLength="8"
                android:imeOptions="actionNext"
-               android:inputType="text" />
+               android:inputType="number" />
 
        </com.google.android.material.textfield.TextInputLayout>
 
